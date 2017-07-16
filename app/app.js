@@ -12,13 +12,16 @@ import {
   View
 } from 'react-native';
 import { Container, Content, Button } from 'native-base';
+import FormatTime from 'minutes-seconds-milliseconds';
 
 export default class Stopwatch extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      running: false
+      timeElapsed: 0,
+      running: false,
+      startTime: null
     }
 
     this.handleStartPress = this.handleStartPress.bind(this);
@@ -30,7 +33,7 @@ export default class Stopwatch extends Component {
         <Content contentContainerStyle={{flex: 1}}>
           <View style={styles.container}>
             <Text style={styles.content}>
-              00:00:00
+              {FormatTime(this.state.timeElapsed)}
             </Text>
             <Button style={{alignSelf: 'center'}} onPress={this.handleStartPress}>
               <Text style={styles.button}>{this.state.running ? 'Stop' : 'Start'}</Text>
@@ -42,7 +45,22 @@ export default class Stopwatch extends Component {
   }
 
   handleStartPress() {
-    this.setState({ running: !this.state.running })
+    if (this.state.running) {
+      clearInterval(this.interval)
+      this.setState({running: false})
+      return
+    }
+
+    this.setState({
+      startTime: new Date(),
+    })
+
+    this.interval = setInterval(() => {
+      this.setState({
+        timeElapsed: new Date() - this.state.startTime,
+        running: true,
+      })
+    }, 30)
   }
 }
 
