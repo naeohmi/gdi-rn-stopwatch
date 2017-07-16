@@ -14,6 +14,16 @@ import {
 import { Container, Content, Button } from 'native-base';
 
 export default class Stopwatch extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      running: false
+    }
+
+    this.handleStartPress = this.handleStartPress.bind(this);
+  }
+
   render() {
     return (
       <Container>
@@ -22,13 +32,17 @@ export default class Stopwatch extends Component {
             <Text style={styles.content}>
               00:00:00
             </Text>
-            <Button style={{alignSelf: 'center'}}>
-              <Text style={styles.button}>Start</Text>
+            <Button style={{alignSelf: 'center'}} onPress={this.handleStartPress}>
+              <Text style={styles.button}>{this.state.running ? 'Stop' : 'Start'}</Text>
             </Button>
           </View>
         </Content>
       </Container>
     );
+  }
+
+  handleStartPress() {
+    this.setState({ running: !this.state.running })
   }
 }
 
