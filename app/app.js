@@ -11,15 +11,23 @@ import {
   Text,
   View
 } from 'react-native';
+import { Container, Content, Button } from 'native-base';
 
 export default class Stopwatch extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.content}>
-          Welcome to React Native!
-        </Text>
-      </View>
+      <Container>
+        <Content contentContainerStyle={{flex: 1}}>
+          <View style={styles.container}>
+            <Text style={styles.content}>
+              00:00:00
+            </Text>
+            <Button style={{alignSelf: 'center'}}>
+              <Text style={styles.button}>Start</Text>
+            </Button>
+          </View>
+        </Content>
+      </Container>
     );
   }
 }
@@ -32,10 +40,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   content: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10,
   },
+  button: {
+    color: '#FFFFFF'
+  }
 });
 
 AppRegistry.registerComponent('Stopwatch', () => Stopwatch);
